@@ -10,7 +10,7 @@
 typedef struct elemento Elemento;
 
 
-Lista* criar(){
+Lista* criar(){					//Criar a lista
 	Lista *aed;
 	aed = (Lista*)malloc(sizeof(Lista));
 	
@@ -19,7 +19,7 @@ Lista* criar(){
 	
 	return aed;}
 	
-int inserirInicio(Lista *aed, struct professor novosdados){    //Inserir no inicio sem repetição de Id
+int inserirInicio(Lista *aed, struct professor novosdados){    //Inserir no inicio sem repetiÃ§Ã£o de Id
 	if(aed == NULL) return 0;
 	
 	Elemento *novo, *aux;
@@ -37,9 +37,12 @@ int inserirInicio(Lista *aed, struct professor novosdados){    //Inserir no inic
 	*aed = novo;
 	return 1;}
 	
-int imprimir(Lista *aed){
+	
+int imprimir(Lista *aed){								//Imprimir todos os elementos da lista ou diz se estÃ¡ vazia
 	if(aed == NULL) return 0;
-	if(*aed == NULL) return 0;
+	if(*aed == NULL) {
+		printf("\nLista vazia");
+		return 0;}
 	
 	Elemento *aux;
 	aux = *aed;
@@ -51,7 +54,7 @@ int imprimir(Lista *aed){
 		aux = aux->prox;}
 	return 1;}
 	
-void info(Lista *aed){
+void info(Lista *aed){								//Informa quantos ID pares, impares, o maior e o menor
 	if(aed == NULL) printf("Lista vazia");
 	
 	int par, impar, menor, maior;
@@ -83,21 +86,27 @@ void info(Lista *aed){
 	printf("\nO menor: %d", menor);
 }
 
-int remover2Inicio(Lista *aed){
+int remover2Inicio(Lista *aed){					//Remove 2 elementos do inicio da lista
 	if(aed == NULL) return 0;
 	if(*aed == NULL) return 0;
 	
-	Elemento *aux, *ant;
+	Elemento *aux, *ant;						//Falta remover quando tiver so 1 elemento
 	ant = *aed;
 	aux = ant->prox;
 	
-	*aed = aux->prox;
+	if(aux == NULL){					//Somente 1 Elemento na lista
+		*aed = NULL;
+		free(ant);
+		return 1;}
 	
+	else{
+	*aed = aux->prox;
 	free(aux);
 	free(ant);
 	return 1;}
+}
 	
-int remover2Fim(Lista *aed){
+int remover2Fim(Lista *aed){    //Remover 2 elementos do fim da lista
 	if(aed == NULL) return 0;
 	if(*aed == NULL) return 0;
 		
@@ -105,19 +114,34 @@ int remover2Fim(Lista *aed){
 	ant = *aed;
 	aux = ant->prox;
 	
-	while(aux->prox != NULL){
-	ant = aux;
-	aux = aux->prox;}
+	if(ant->prox == NULL){      //Somente 1 elemento na lista
+		*aed = NULL;
+		free(ant);}	
+		
+	if(aux->prox == NULL){     //Somente 2 elementos na lista
+		*aed = NULL;
+		free(aux);
+		free(ant);}
+
+	else{					   //+ de 2 elementos na lista
 	
-	free(aux);
-	free(ant);
+	Elemento *pro, *meio, *pri;
+	pri = *aed;
+	meio = pri->prox;
+	pro = meio->prox;
+		
+		while(pro->prox != NULL){
+			pri = meio;
+			meio = pro;
+			pro = pro->prox;}
 	
+			pri->prox = NULL;
 	
-}
+		free(meio);
+		free(pro);}
+		
+	return 1;}
 	
-	
-	
-	
-	
+
 	
 	
