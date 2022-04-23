@@ -18,6 +18,8 @@ struct professor placido;
 placido.id = 04;
 struct professor antonio;
 antonio.id = 03;
+struct professor camila;
+camila.id = 06;
 
 inserirInicio(li, roberto);
 	imprimir(li);
@@ -27,18 +29,8 @@ inserirInicio(li, placido);
 	imprimir(li);
 inserirInicio(li, antonio);
 	imprimir(li);
-	
-	
-info(li);
-remover2Inicio(li);
-	imprimir(li);
-inserirInicio(li, antonio);
-	imprimir(li);
 
-remover2Fim(li);
-	imprimir(li);
 
-	
 	
 	
 	
