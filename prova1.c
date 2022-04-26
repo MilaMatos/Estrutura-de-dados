@@ -37,6 +37,29 @@ int inserirInicio(Lista *aed, struct professor novosdados){    //Inserir no inic
 	*aed = novo;
 	return 1;}
 	
+int inserirFim(Lista *aed, struct professor novosdados){
+	if(aed == NULL) return 0;
+	
+	Elemento *novo, *aux = *aed;
+	novo = (Elemento*)malloc(sizeof(Elemento));
+	novo->dados = novosdados;
+	novo->prox = NULL;
+	
+	if(*aed == NULL){
+		*aed = novo;}
+	
+	else{
+	
+	while(aux->prox != NULL){
+		aux = aux->prox;}
+	
+	aux->prox = novo;
+	return 1;}
+	
+	
+	
+}
+	
 	
 int imprimir(Lista *aed){								//Imprimir todos os elementos da lista ou diz se está vazia
 	if(aed == NULL) return 0;
@@ -142,6 +165,51 @@ int remover2Fim(Lista *aed){    //Remover 2 elementos do fim da lista
 		
 	return 1;}
 	
+int quantElem(Lista *aed){
+	if(aed == NULL) return 0;
+	if(*aed == NULL) return 0;	
+	
+	Elemento *aux = *aed;
+	int cont = 0;
+	
+	while(aux != NULL){
+		cont++;
+		aux = aux->prox;}
+		
+	return cont;}
+	
+	
+Lista* concatenar(Lista *pri, Lista *seg){
+	Lista *resu;
+	resu = NULL;
+	resu = criar();
+	Elemento *aux = *pri;
+	
+	while(aux->prox != NULL) aux = aux->prox;
+	
+		aux->prox = *seg;
+		*resu = *pri;
+	
+	*pri = NULL;
+	*seg =  NULL;
+		
+	return resu;}
+	
+	
+Lista* concatenar2(Lista *pri, Lista *seg){
+	Lista *resu;
+	resu = NULL;
+	resu = criar();
+	
+	Elemento *aux1 = *pri;
+	Elemento *aux2 = *seg;
 
-	
-	
+	while(aux1 != NULL){
+		inserirFim(resu, aux1->dados);
+		aux1 = aux1->prox;}	
+		
+	while(aux2 != NULL){
+		inserirFim(resu, aux2->dados);
+		aux2 = aux2->prox;}	
+		
+	return resu;}
