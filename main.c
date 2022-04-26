@@ -9,6 +9,7 @@ Lista *li, *fi;
 li = NULL;
 fi = NULL;
 li = criar();
+fi = criar();
 
 struct professor roberto;
 roberto.id = 01;
@@ -23,18 +24,18 @@ camila.id = 06;
 
 inserirInicio(li, roberto);
 	imprimir(li);
-inserirInicio(li, nelson);
+inserirFim(li, nelson);
 	imprimir(li);
-inserirInicio(li, placido);
-	imprimir(li);
-inserirInicio(li, antonio);
-	imprimir(li);
+inserirInicio(fi, placido);
+	imprimir(fi);
+inserirInicio(fi, antonio);
+	imprimir(fi);
 
+printf("\n\n%d", quantElem(li));
 
-	
-	
-	
-	
+Lista *resu;
+resu = concatenar(li, fi);
+imprimir(resu);
 	
 	
 	
