@@ -35,11 +35,7 @@ int main() {
 	mover(fi, pu);
 	imprimir(pu);
 	mover(fi, pu);
-	imprimir(pu);	
-		
-		
-		
-		
+	imprimir(pu);		
 		
 	return 0;
 }
