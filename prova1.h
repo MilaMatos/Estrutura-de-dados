@@ -1,20 +1,19 @@
-struct professor{
+struct
+struct aluno{
 	int id;
 	char nome[50];
-	float salario;
-	int nota;
+	float media;
 };
-	
-typedef struct elemento* Lista;
 
-Lista* criar();
-int inserirInicio(Lista*, struct professor);   //Inserir no inicio sem repetição de Id
-int imprimir(Lista*);						  //Imprime os elementos da lista	
-void info(Lista*); 						     //Dizer quantos impares, pares, maior e menor valor de uma lista
-int remover2Inicio(Lista*);					//remover os 2 primeiros
-int remover2Fim(Lista*);				   //remover os 2 ultimos
+typedef struct node Fila;
 
-int quantElem(Lista*);
-int inserirFim(Lista*, struct professor); 
-Lista* concatenar(Lista*, Lista*);
-Lista* concatenar2(Lista*, Lista*);
+Fila* criar();
+int inserir(Fila*, struct aluno);
+int imprimir(Fila*);
+int remover(Fila*);
+
+int inverter(Fila*);			//Use manipulação de ponteiros, não crie uma fila nova.
+int limpezaCentral(Fila*); 		//Remova tudo da fila, exceto o primeiro e o último elemento.
+int limpezaExtremos(Fila*); 	//Remova o primeiro e o último elemento da fila.
+int ordenada(Fila*); 			//Função verifica se fila está ordenada (por id/matrícula/código). por ordem crescente
+int mover(Fila*, Fila*); 	    //Faça uma função que permita você mover um elemento de uma fila para outra fila.
