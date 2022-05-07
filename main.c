@@ -5,38 +5,41 @@
 
 
 int main() {
-Lista *li, *fi;
-li = NULL;
-fi = NULL;
-li = criar();
-fi = criar();
-
-struct professor roberto;
-roberto.id = 01;
-struct professor nelson;
-nelson.id = 02;
-struct professor placido;
-placido.id = 04;
-struct professor antonio;
-antonio.id = 03;
-struct professor camila;
-camila.id = 06;
-
-inserirInicio(li, roberto);
-	imprimir(li);
-inserirFim(li, nelson);
-	imprimir(li);
-inserirInicio(fi, placido);
-	imprimir(fi);
-inserirInicio(fi, antonio);
-	imprimir(fi);
-
-printf("\n\n%d", quantElem(li));
-
-Lista *resu;
-resu = concatenar(li, fi);
-imprimir(resu);
+	Fila *fi;
+	fi = NULL;
+	fi = criar();
+	Fila *pu;
+	pu = NULL;
+	pu = criar();
 	
+	struct aluno auxiliar;
 	
-	
-	return 0;}
+	struct aluno camila;
+	camila.id = 01;
+	struct aluno camila2;
+	camila2.id = 02;
+	struct aluno camila3;
+	camila3.id = 03;	
+	inserir(fi, camila);
+		imprimir(fi);
+	inserir(fi, camila2);
+		imprimir(fi);
+	inserir(fi, camila3);
+		imprimir(fi);
+		
+			
+	mover(fi, pu);
+	imprimir(pu);
+	mover(fi, pu);
+	imprimir(pu);
+	mover(fi, pu);
+	imprimir(pu);
+	mover(fi, pu);
+	imprimir(pu);	
+		
+		
+		
+		
+		
+	return 0;
+}
