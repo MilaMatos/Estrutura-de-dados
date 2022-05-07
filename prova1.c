@@ -1,215 +1,200 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "prova1.h"
+#include "pilha.h"
 
-	struct elemento{
-		struct professor dados;
-		struct elemento *prox;
-	};
-	
+struct elemento{
+	struct aluno dados;
+	struct elemento *prox;
+};
+
+struct node{
+	struct elemento *ultimo;
+	struct elemento *primeiro;
+	int qtd;
+};
+
 typedef struct elemento Elemento;
 
+Fila* criar(){
+	Fila *aed;
+aed = (Fila*)malloc(sizeof(Fila));
 
-Lista* criar(){					//Criar a lista
-	Lista *aed;
-	aed = (Lista*)malloc(sizeof(Lista));
+	if (aed != NULL){
+		aed->qtd=0;
+		aed->primeiro = NULL;
+		aed->ultimo = NULL;
+		printf("Criou");
+	}
 	
-	if(aed != NULL){
-		*aed = NULL;}
-	
-	return aed;}
-	
-int inserirInicio(Lista *aed, struct professor novosdados){    //Inserir no inicio sem repetição de Id
-	if(aed == NULL) return 0;
-	
-	Elemento *novo, *aux;
-	novo = (Elemento*)malloc(sizeof(Elemento));
-	novo->dados = novosdados;
-	
-	aux = *aed;
-	
-	while(aux!= NULL){
-		if(aux->dados.id == novosdados.id) return 0;
-		
-		aux = aux->prox;}
-		
-	novo->prox = *aed;
-	*aed = novo;
-	return 1;}
-	
-int inserirFim(Lista *aed, struct professor novosdados){
-	if(aed == NULL) return 0;
-	
-	Elemento *novo, *aux = *aed;
-	novo = (Elemento*)malloc(sizeof(Elemento));
-	novo->dados = novosdados;
-	novo->prox = NULL;
-	
-	if(*aed == NULL){
-		*aed = novo;}
-	
-	else{
-	
-	while(aux->prox != NULL){
-		aux = aux->prox;}
-	
-	aux->prox = novo;
-	return 1;}
-	
-	
-	
+	return aed;
 }
+
+int inserir(Fila *aed, struct aluno novosdados){
+	if (aed == NULL) return 0;
 	
+Elemento *novo;
+novo = (Elemento*)malloc(sizeof(Elemento));
+novo->dados = novosdados;
+novo->prox = NULL;     
+
+	if(aed->qtd == 0) aed->primeiro = novo;
+	else aed->ultimo->prox = novo;
 	
-int imprimir(Lista *aed){								//Imprimir todos os elementos da lista ou diz se está vazia
-	if(aed == NULL) return 0;
-	if(*aed == NULL) {
-		printf("\nLista vazia");
-		return 0;}
+	aed->ultimo = novo;
+	aed->qtd++;
 	
+ return 1;
+}
+ 
+ int imprimir(Fila *aed){
+	if (aed == NULL) return 0;
+	if (aed->qtd == 0){ 
+		printf("\nVazia");
+		return 0;
+	}
+		
 	Elemento *aux;
-	aux = *aed;
+	aux = aed->primeiro;								//...........................................
 	
 	printf("\n");
 	while(aux != NULL){
-		printf("[%d]", aux->dados.id);
-		
-		aux = aux->prox;}
-	return 1;}
+		printf("[%d] \t", aux->dados.id);
+		aux = aux->prox;
+	}
 	
-void info(Lista *aed){								//Informa quantos ID pares, impares, o maior e o menor
-	if(aed == NULL) printf("Lista vazia");
+	return 1;
+}
 	
-	int par, impar, menor, maior;
-	Elemento *aux;
-	aux = *aed;
-	
-	par = 0;
-	impar = 0;
-	maior = aux->dados.id;
-	menor = aux->dados.id;
-	
-	while(aux != NULL){
-		if(aux->dados.id % 2 == 0) 
-			par++;
-		if(aux->dados.id % 2 != 0) 
-			impar++;
-		
-		if(maior < aux->dados.id){
-			maior = aux->dados.id;}
+int remover(Fila *aed){	
+	if (aed == NULL) return 0;
+	if (aed->qtd == 0) return 0;				//...........................................
 			
-		if(menor > aux->dados.id){
-			menor = aux->dados.id;}
-		
-		aux = aux->prox;}
-	
-	printf("\nPares: %d", par);
-	printf("\nImpares: %d", impar);
-	printf("\nO maior: %d", maior);
-	printf("\nO menor: %d", menor);
-}
-
-int remover2Inicio(Lista *aed){					//Remove 2 elementos do inicio da lista
-	if(aed == NULL) return 0;
-	if(*aed == NULL) return 0;
-	
-	Elemento *aux, *ant;						//Falta remover quando tiver so 1 elemento
-	ant = *aed;
-	aux = ant->prox;
-	
-	if(aux == NULL){					//Somente 1 Elemento na lista
-		*aed = NULL;
-		free(ant);
+	if(aed->qtd == 1){
+		aed->primeiro = NULL;
+		aed->ultimo =  NULL;
+		aed->qtd--;
 		return 1;}
-	
-	else{
-	*aed = aux->prox;
-	free(aux);
-	free(ant);
+		
+	else{					//...........................................
+	aed->primeiro = aed->primeiro->prox;
+	aed->qtd--;
 	return 1;}
 }
+
+int inverter(Fila *aed){
+	if (aed == NULL) return 0;
+	if (aed->qtd == 0 || aed->qtd == 1) return 0;
 	
-int remover2Fim(Lista *aed){    //Remover 2 elementos do fim da lista
-	if(aed == NULL) return 0;
-	if(*aed == NULL) return 0;
+	Elemento *ant, *aux, *pos;
+	aux = aed->primeiro;
+	ant = NULL;
+	pos = aux->prox;
+	
+	aed->ultimo = aux;
+	
+	while(pos != NULL){
+		aux->prox = ant;
 		
+		ant = aux;
+		aux =  pos;
+		pos = pos->prox;
+	}
+	aux->prox = ant;
+	aed->primeiro = aux;
+	return 1;
+}
+
+int limpezaCentral(Fila *aed){
+	if (aed == NULL) return 0;
+	if (aed->qtd == 0 || aed->qtd == 1 || aed->qtd == 2) return 0;
+	
+	Elemento *aux;
+	aux = aed->primeiro->prox;
+	Elemento *pos = aux->prox;
+	while(aux->prox != NULL){
+		free(aux);
+		aed->qtd--;
+		
+		aux = pos;
+		pos = pos->prox;
+	}
+	aed->primeiro->prox = aux;
+	
+	return 1;
+} 	
+	
+int limpezaExtremos(Fila *aed){
+	if (aed == NULL) return 0;
+	if (aed->qtd == 0) return 0;
+	
+	if(aed->qtd == 1 || aed->qtd == 2){
+		if(aed->qtd == 2); free(aed->ultimo);
+		free(aed->primeiro);
+		aed->primeiro = NULL;
+		aed->ultimo = NULL;
+		aed->qtd = 0;	
+	}
+	
+	else {
 	Elemento *aux, *ant;
-	ant = *aed;
+	ant = aed->primeiro;
+	aux = ant->prox;
+	aed->primeiro = aux;
+	free(ant);
+	aed->qtd--;
+
+		while(aux->prox != NULL){
+		
+			ant = aux;
+			aux = aux->prox;
+		}
+	ant->prox = NULL;
+	aed->ultimo = ant;
+	free(aux);
+	aed->qtd--;
+	}
+	return 1;
+}	
+	
+int ordenada(Fila *aed){
+	if (aed == NULL) return 0;
+	if (aed->qtd == 0) return 0;
+	if (aed->qtd == 1) return 1;
+	
+	Elemento *aux, *ant;
+	ant = aed->primeiro;
 	aux = ant->prox;
 	
-	if(ant->prox == NULL){      //Somente 1 elemento na lista
-		*aed = NULL;
-		free(ant);}	
-		
-	if(aux->prox == NULL){     //Somente 2 elementos na lista
-		*aed = NULL;
-		free(aux);
-		free(ant);}
-
-	else{					   //+ de 2 elementos na lista
-	
-	Elemento *pro, *meio, *pri;
-	pri = *aed;
-	meio = pri->prox;
-	pro = meio->prox;
-		
-		while(pro->prox != NULL){
-			pri = meio;
-			meio = pro;
-			pro = pro->prox;}
-	
-			pri->prox = NULL;
-	
-		free(meio);
-		free(pro);}
-		
-	return 1;}
-	
-int quantElem(Lista *aed){
-	if(aed == NULL) return 0;
-	if(*aed == NULL) return 0;	
-	
-	Elemento *aux = *aed;
-	int cont = 0;
 	
 	while(aux != NULL){
-		cont++;
-		aux = aux->prox;}
+		if(aux->dados.id < ant->dados.id) return 0;
+		ant = aux;
+		aux = aux->prox;
+	}
 		
-	return cont;}
+	return 1;	
+}
 	
+int mover(Fila *aed, Fila *mov){
+	if (aed == NULL || mov == NULL) return 0;
+	if (aed->qtd == 0) return 0;
 	
-Lista* concatenar(Lista *pri, Lista *seg){
-	Lista *resu;
-	resu = NULL;
-	resu = criar();
-	Elemento *aux = *pri;
+	Elemento *aux, *aux2;
+	aux = aed->primeiro;
 	
-	while(aux->prox != NULL) aux = aux->prox;
+	aed->primeiro = aux->prox;	//desalocando da primeira lista
+	aed->qtd--;
 	
-		aux->prox = *seg;
-		*resu = *pri;
+	//inserir(mov, aux->dados);
+	if(mov->qtd == 0) mov->primeiro = aux;
+	else mov->ultimo->prox = aux;
 	
-	*pri = NULL;
-	*seg =  NULL;
-		
-	return resu;}
+	aux->prox = NULL;
+	mov->ultimo = aux;
+	mov->qtd++;
 	
-	
-Lista* concatenar2(Lista *pri, Lista *seg){
-	Lista *resu;
-	resu = NULL;
-	resu = criar();
-	
-	Elemento *aux1 = *pri;
-	Elemento *aux2 = *seg;
+ return 1;
 
-	while(aux1 != NULL){
-		inserirFim(resu, aux1->dados);
-		aux1 = aux1->prox;}	
-		
-	while(aux2 != NULL){
-		inserirFim(resu, aux2->dados);
-		aux2 = aux2->prox;}	
-		
-	return resu;}
+}
+	
+ 
